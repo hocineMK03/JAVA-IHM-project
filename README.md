@@ -7,6 +7,7 @@ https://drive.google.com/drive/folders/1fUrZOleIYqwwQ_TybCv9oQBWT75vWMVk?usp=sha
 
 ### The group
 -Mechkak Hocine Arezki groupe 2
+-Zerabib Chahrazad
 
 ## Getting Started
 
