@@ -6,7 +6,7 @@ https://drive.google.com/drive/folders/1fUrZOleIYqwwQ_TybCv9oQBWT75vWMVk?usp=sha
 
 ## Getting Started
 
-These instructions will guide you on how to import the database tables into MySQL.
+These instructions will guide you on how to use this repo.
 
 ### Prerequisites
 
