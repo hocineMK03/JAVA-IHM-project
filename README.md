@@ -12,6 +12,7 @@ These instructions will guide you on how to use this repo.
 
 - MySQL installed on your machine.
 - Access to the MySQL command line or a tool like MySQL Workbench.
+- git installed on your machine
 
 ### Importing Database Tables
 
