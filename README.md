@@ -29,7 +29,7 @@ These instructions will guide you on how to use this repo.
 2. **Import the tables to a database in your workbench and name it mydb :**
 
 3. **Optionel :**
-in the application you can admin by using :
+in the application you can use admin by using :
 ```
 matricule : 3
 password : 3
