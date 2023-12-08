@@ -1,9 +1,4 @@
-mydb folder is the database , it contains two tables  "users" and "memoires" import them to mysql . Other folders are for the desktop app 
-admin is 
-matricule: 3
-password: 3
-you can find video illustrations here :
-https://drive.google.com/drive/folders/1fUrZOleIYqwwQ_TybCv9oQBWT75vWMVk?usp=sharing
+
 # memory management system
 
 for illustartion video you can go here :
@@ -28,5 +23,9 @@ These instructions will guide you on how to import the database tables into MySQ
 
 2. **Import the tables to a database in your workbench and name it mydb :**
 
-
+3. **Optionel :**
+in the application you can admin by using :
+```
+matricule : 3
+password : 3
    
