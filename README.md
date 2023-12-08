@@ -4,6 +4,10 @@
 for illustartion video you can go here :
 https://drive.google.com/drive/folders/1fUrZOleIYqwwQ_TybCv9oQBWT75vWMVk?usp=sharing
 
+
+### The group
+-Mechkak Hocine Arezki groupe 2
+
 ## Getting Started
 
 These instructions will guide you on how to use this repo.
