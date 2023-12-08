@@ -140,6 +140,7 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 		int year=0;
 		System.out.println("whichone"+whichone);
 		if(e.getSource()==btnsubmit && whichone) {
+			dbops.DBreconnect();
 			int etudiantresponce=dbops.checkmatricule(etudiantmatricule);
 			int encadreurresponce=dbops.checkmatricule(encadreurmatricule);
 			if(encadreurresponce!=-1 && etudiantresponce!=-1) {
@@ -155,8 +156,8 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 			            		DBcon.closeConnection();
 				            	System.out.println("here");
 				            	Homeui homeui=new Homeui(dbops);
-				            	homeui.setVisible(false);
-				            	frame.setVisible(true);
+				            	homeui.setVisible(true);
+				            	frame.setVisible(false);
 				            }
 				            else {
 				            	System.out.println("soemthing happenned");

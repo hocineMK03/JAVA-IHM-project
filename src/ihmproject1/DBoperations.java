@@ -502,5 +502,8 @@ try {
 	    }
 	}
 
+	public void DBreconnect() {
+		dbcon=new DBcon();
+	}
 
 }
