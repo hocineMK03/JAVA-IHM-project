@@ -257,7 +257,37 @@ public class DBoperations {
 
 	
 	
-	
+	public List<StudentsInfo> getStudents(){
+		String query="SELECT matricule,name,prenom FROM users WHERE 1=1 AND type=1";
+		List<StudentsInfo> studentsList = new ArrayList<>();
+		try {
+			PreparedStatement pstmt = DBcon.con.prepareStatement(query);
+			
+			
+		    
+			
+		    try (ResultSet resultSet = pstmt.executeQuery()) {
+		        while (resultSet.next()) {
+		        
+		           //put data in a  table or a list
+		        	 String matricule = resultSet.getString("matricule");
+                     String name = resultSet.getString("name");
+                     String prenom = resultSet.getString("prenom");
+		        	
+                      StudentsInfo student = new StudentsInfo(name, prenom,matricule);
+                      studentsList.add(student);
+		        }
+		        
+		    }
+		    
+           
+       } catch (SQLException e) {
+           e.printStackTrace();
+           System.err.println("Failed to create statement.");
+           
+       }
+		return studentsList;
+	}
 	
 	public Authuser getAuthUser() {
 	    return u;
@@ -501,7 +531,7 @@ try {
 	        return false;
 	    }
 	}
-
+	
 	public void DBreconnect() {
 		dbcon=new DBcon();
 	}

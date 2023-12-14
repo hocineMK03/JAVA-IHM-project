@@ -11,7 +11,7 @@ public class Signup extends JFrame implements ActionListener{
 	
 	
 	JFrame frame;
-	JLabel matricule,password,header,name,prenom;
+	JLabel matricule,password,header,name,prenom,error;
 	JTextField txtmat,txtname,txtprenom;
 	JPasswordField txtpass;
 	JButton btnlogin,btnsignup;
@@ -26,13 +26,15 @@ public class Signup extends JFrame implements ActionListener{
 		frame=new JFrame("signup");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(450, 450);
+		frame.setResizable(false);
 		North=new JPanel();
 		Center=new JPanel();
 		South=new JPanel();
 		North.setBackground(Color.WHITE);
 		Center.setBackground(Color.WHITE);
 		South.setBackground(Color.WHITE);
-
+		error=new JLabel("password or matricule ");
+		error.setVisible(false);
 		North.setPreferredSize(new Dimension(100,100));
 		Center.setPreferredSize(new Dimension(10,50));
 		South.setPreferredSize(new Dimension(50,50));
@@ -79,13 +81,13 @@ public class Signup extends JFrame implements ActionListener{
 		Center.add(txtpass);
 		Center.add(btnsignup);
 		Center.add(btnlogin);
-		
+		South.add(error);
 		frame.setLayout(new BorderLayout());
 		
 		frame.add(North,BorderLayout.NORTH);
 		frame.add(Center,BorderLayout.CENTER);
 		frame.add(South,BorderLayout.SOUTH);
-		setLocationRelativeTo(null);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 	@Override
@@ -99,6 +101,15 @@ public class Signup extends JFrame implements ActionListener{
 		Boolean can=true;
 		if(matricule.equals("") || password.equals("") || name.equals("") || prenom.equals("")) {
 			can=false;
+			error.setVisible(true);
+			System.out.println("inputs empty");
+		}
+		if(!matricule.equals("")) {
+			if(dbops.getId(matricule)!=-1) {
+				error.setVisible(true);
+				error.setText("matricule already exist");
+				can=false;
+			}
 		}
 		int type=0;
 		if(e.getSource()==btnsignup && can) {

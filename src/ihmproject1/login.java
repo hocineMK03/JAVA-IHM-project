@@ -24,6 +24,7 @@ public class login extends JFrame implements ActionListener {
 		frame=new JFrame("login");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(400, 400);
+		frame.setResizable(false);
 		North=new JPanel();
 		Center=new JPanel();
 		South=new JPanel();
@@ -96,7 +97,7 @@ public class login extends JFrame implements ActionListener {
 		frame.add(North,BorderLayout.NORTH);
 		frame.add(Center,BorderLayout.CENTER);
 		frame.add(South,BorderLayout.SOUTH);
-		setLocationRelativeTo(null);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 	@Override
@@ -108,6 +109,8 @@ public class login extends JFrame implements ActionListener {
 		String password=txtpass.getText();
 		if(matricule.equals("") || password.equals("")) {
 			can=false;
+			error.setVisible(true);
+			System.out.println("inputs empty");
 		}
 		
 			if(e.getSource()==btnsignup) {

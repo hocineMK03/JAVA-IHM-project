@@ -15,13 +15,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class MemoireCreateUI extends JFrame implements ActionListener {
 	DBoperations dbops;
-	JFrame frame;
+	JFrame frame,showframe;
 	JLabel lencadreur,letudiant,llevel,ltitle,header,error,ldesc,lresume,lyear;
-	JTextField txtencadreur,txttitle,txtlevel,txtetudiant,txtdesc,txtresume,txtyear;
+	JTextField txtencadreur,txttitle,txtlevel,txtetudiant,txtdesc,txtyear;
+	JTextArea txtresume;
 	JPasswordField txtpass;
 	JButton btnsubmit,btngoback;
 	JPanel North,Center,South;
@@ -34,12 +39,14 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 		whichone=true;
 		this.dbops=dbops;
 		framebuilder();
+		etudiantsframe();
 	}
 	public MemoireCreateUI(DBoperations dbops, MemoireData singlememoire) {
 		whichone=false;
 		this.singlememoire=singlememoire;
 		this.dbops=dbops;
 		framebuilder();
+		
 		Object encadreurObject = singlememoire.getEncadreur();
 		String mattostr = encadreurObject.toString();
 		Object etudiantObject = singlememoire.getEtudiant();
@@ -58,13 +65,13 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 	}
 	private void framebuilder() {
 		
-		frame=new JFrame("signup");
+		frame=new JFrame("Create");
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setSize(500, 550);
 		North=new JPanel();
 		Center=new JPanel();
 		South=new JPanel();
-		
+		Authuser u=dbops.getAuthUser();
 		North.setPreferredSize(new Dimension(100,100));
 		Center.setPreferredSize(new Dimension(100,150));
 		South.setPreferredSize(new Dimension(50,50));
@@ -82,9 +89,10 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 		txttitle=new JTextField();
 		txtlevel=new JTextField();
 		txtdesc=new JTextField();
-		txtresume=new JTextField();
+		txtresume=new JTextArea();
 		txtyear=new JTextField();
-		
+		txtencadreur.setText(u.getName());
+		txtencadreur.setEditable(false);
 		lencadreur=new JLabel("encadreur mat");
 		letudiant=new JLabel("etudiant mat");
 		ltitle=new JLabel("title");
@@ -121,17 +129,49 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 		frame.add(North,BorderLayout.NORTH);
 		frame.add(Center,BorderLayout.CENTER);
 		frame.add(South,BorderLayout.SOUTH);
-		
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
+public void etudiantsframe() {
+	 showframe=new JFrame("etudiants infos");
+	dbops.DBreconnect();
+	List<StudentsInfo> studentsList=dbops.getStudents();
+	String[] columnNames = {"Matricule", "Name", "Prenom"};
+	DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
+    // Populate the table model with data from the studentsList
+    for (StudentsInfo student : studentsList) {
+        Object[] rowData = {student.getMatricule(), student.getName(), student.getPrenom()};
+        tableModel.addRow(rowData);
+    }
+
+   
+    JTable table = new JTable(tableModel);
+
+    
+    JScrollPane scrollPane = new JScrollPane(table);
+
+ 
+    JPanel detailspanel = new JPanel(new BorderLayout());
+    detailspanel.add(scrollPane, BorderLayout.CENTER);
+
+   
+    showframe.add(detailspanel);
+
+    // Set frame properties
+   
+    showframe.setSize(600, 400);
+    showframe.setLocationRelativeTo(null); // Center the frame on the screen
+    showframe.setVisible(true);
+
+}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		// TODO Auto-generated method stub
 		String etudiantmatricule=txtetudiant.getText();
-		String encadreurmatricule=txtencadreur.getText();
+	String encadreurmatricule=txtencadreur.getText();
 		String title=txttitle.getText();
 		String level=txtlevel.getText();
 		String desc=txtdesc.getText();
@@ -141,8 +181,9 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 		System.out.println("whichone"+whichone);
 		if(e.getSource()==btnsubmit && whichone) {
 			dbops.DBreconnect();
+			Authuser u=dbops.getAuthUser();
 			int etudiantresponce=dbops.checkmatricule(etudiantmatricule);
-			int encadreurresponce=dbops.checkmatricule(encadreurmatricule);
+			int encadreurresponce=u.getId();
 			if(encadreurresponce!=-1 && etudiantresponce!=-1) {
 				if(encadreurresponce==1 ||etudiantresponce==2 ) {
 					error.setText("matricule isn't the same type as the required type");
@@ -158,6 +199,8 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 				            	Homeui homeui=new Homeui(dbops);
 				            	homeui.setVisible(true);
 				            	frame.setVisible(false);
+				            	showframe.setVisible(false);
+								showframe.dispose();
 				            }
 				            else {
 				            	System.out.println("soemthing happenned");
@@ -204,6 +247,8 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 						ManagerUI managerui=new ManagerUI(dbops);
 						managerui.setVisible(true);
 						frame.setVisible(false);
+						showframe.setVisible(false);
+						showframe.dispose();
 					}
 					else {
 						error.setText("can't update");
@@ -220,11 +265,14 @@ public class MemoireCreateUI extends JFrame implements ActionListener {
 		}
 		
 		if(e.getSource()==btngoback) {
-			frame.dispose();
+			
 			DBcon.closeConnection();
 			Homeui homeui=new Homeui(dbops);
 			homeui.setVisible(true);
 			frame.setVisible(false);
+			showframe.setVisible(false);
+			showframe.dispose();
+			frame.dispose();
 		}
 	}
 }

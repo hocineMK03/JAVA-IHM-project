@@ -30,16 +30,17 @@ public class ManagerUI extends JFrame implements ActionListener {
 	
 	public ManagerUI(DBoperations dbops) {
         this.dbops = dbops;
-        frame = new JFrame("login");
+        frame = new JFrame("manager");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(600, 600);
         u = dbops.getAuthUser();
-        North = new JPanel();
+        North = new JPanel(new BorderLayout());
         Center = new JPanel();
         South = new JPanel();
         SouthPanel = new JPanel(); // New panel for "ID," text field, and buttons
 
         table = new JTable();
+        
         btngoback = new JButton("Go Back");
         btndelete = new JButton("Delete");
         txtidinput = new JTextField();
@@ -62,7 +63,9 @@ public class ManagerUI extends JFrame implements ActionListener {
             
         }
         SouthPanel.add(error);
-        North.add(table);
+        North.add(table.getTableHeader(), BorderLayout.NORTH);
+        North.add(table, BorderLayout.CENTER);
+       
         Center.add(btngoback);
 
         frame.setLayout(new BorderLayout());
@@ -79,6 +82,7 @@ public class ManagerUI extends JFrame implements ActionListener {
 
         txtidinput.setPreferredSize(new Dimension(150, 25));
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 	
