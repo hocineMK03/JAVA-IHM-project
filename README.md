@@ -4,7 +4,8 @@
 for illustartion video you can go here :
 https://drive.google.com/drive/folders/1fUrZOleIYqwwQ_TybCv9oQBWT75vWMVk?usp=sharing
 
-
+## App description:
+you can do CRUD operations on memoires , you can sign up , sign in and delete the account , you can logout too
 
 ## Getting Started
 
